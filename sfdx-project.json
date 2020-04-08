@@ -1,0 +1,11 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    }
+  ],
+  "namespace": "",
+  "sfdcLoginUrl": "https://csac-eia-poc.my.salesforce.com/",
+  "sourceApiVersion": "48.0"
+}

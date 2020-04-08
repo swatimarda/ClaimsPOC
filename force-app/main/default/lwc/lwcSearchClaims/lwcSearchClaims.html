@@ -1,0 +1,62 @@
+<template>
+  <lightning-card title="Claims Search" icon-name="standard:contract">
+    <div if:true={errorMsg} style="margin-left: 3%;">
+        <p style="color: red;">{errorMsg}</p>
+    </div>
+    <div class="c-container">
+    <lightning-layout  horizontal-align="spread">
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-input name="input1" type="text" label="Claimant Name"  onchange={handleChange} maxlength="10"></lightning-input>
+        </lightning-layout-item>
+        <template if:false={isAccountRecord}>
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <lightning-input name="input2" type="text" label="Member Name"    onchange={handleChange} maxlength="10"></lightning-input>
+            </lightning-layout-item>
+        </template>
+        <template if:true={isAccountRecord}>
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <lightning-input name="input7" type="text" label="Organizations"    onchange={handleChange} maxlength="10"></lightning-input>
+            </lightning-layout-item>
+        </template>
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-input name="input3" type="text" label="Claim Number"   onchange={handleChange} maxlength="10"></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-input name="input4" type="date" label="Date Of Injury" onchange={handleChange} maxlength="10"></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-input name="input5" type="text" label="Body Part"      onchange={handleChange} maxlength="10"></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-input name="input6" type="text" label="Managing TPA"   onchange={handleChange} maxlength="10"></lightning-input>
+        </lightning-layout-item>
+
+
+        <!--
+        <lightning-layout-item  padding="around-small" flexibility="auto">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <lightning-input name="input1" type="text" label="Claimant Name"  onchange={handleChange} maxlength="10"></lightning-input>
+                    <lightning-input name="input2" type="text" label="Member Name"    onchange={handleChange} maxlength="10"></lightning-input>
+                    <lightning-input name="input3" type="text" label="Claim Number"   onchange={handleChange} maxlength="10"></lightning-input>
+                    <lightning-input name="input4" type="date" label="Date Of Injury" onchange={handleChange} maxlength="10"></lightning-input>
+                    <lightning-input name="input5" type="text" label="Body Part"      onchange={handleChange} maxlength="10"></lightning-input>
+                    <lightning-input name="input6" type="text" label="Managing TPA"   onchange={handleChange} maxlength="10"></lightning-input>
+                </div>
+            </div>
+        </lightning-layout-item>
+        -->
+        <!--
+        <lightning-layout-item size="12" small-device-size="2" medium-device-size="2" large-device-size="2" padding="around-small">
+            <lightning-button label="Search" variant="brand" onclick={applyFilters}></lightning-button>
+        </lightning-layout-item>
+        -->
+    </lightning-layout>
+    </div>
+    <br/>
+    <div if:true={claims}>
+        <lightning-datatable data={claims} columns={columns} key-field="id" hide-checkbox-column="true">
+        </lightning-datatable>
+    </div>
+  </lightning-card>
+</template>

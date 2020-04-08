@@ -1,0 +1,129 @@
+<template>
+<div class="slds-m-top_medium slds-m-bottom_x-large">
+<h2 class="slds-text-heading_medium slds-m-bottom_medium">
+    Create New Claim
+</h2>
+<lightning-card title="Claimant Information" icon-name="custom:custom63">
+    <div class="c-container">
+        <lightning-layout vertical-align="end" class="slds-m-top_medium">
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <lightning-input type="text" label="First Name" value={contactFirstName} onchange={contactFirstNameChange} required ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <lightning-input type="text" label="Middle Name" value={contactMiddleName} onchange={contactMiddleNameChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <lightning-input type="text" label="Last Name" value={contactLastName} onchange={contactLastNameChange} required></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <lightning-input type="text" label="Social Security Number"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <lightning-input type="date" label="Date of Birth" value={dateOfBirth} onchange={dateOfBirthChange}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+
+    </div>
+</lightning-card>
+
+<!--<lightning-layout>
+    <lightning-record-edit-form
+            object-api-name="Contact"
+            id="createContactForm"
+            mode="edit"
+            density="compact">
+        <lightning-messages></lightning-messages>
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-input-field field-name="FirstName">
+            </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-input-field field-name="MiddleName">
+            </lightning-input-field>
+        </lightning-layout-item>
+
+
+
+    </lightning-record-edit-form>
+</lightning-layout>-->
+
+<lightning-card class="slds-m-top_xx-large" title="Claim Details" icon-name="custom:custom63">
+    <div class="c-container">
+        <lightning-layout vertical-align="end" class="slds-m-top_medium">
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <lightning-input type="date" label="Date of Injury" value={dateOfInjury}  onchange={dateOfInjuryChange} required ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" flexibility="auto">
+
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout vertical-align="end" class="slds-m-top_medium">
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <c-lwc-custom-lookup object-name="Account" field-name="Name" select-record-id={selectRecordId}
+                select-record-name={selectRecordName} icon-name = "action:new_account" onselected={handleEventResults} input-label="Select Member" required>
+                </c-lwc-custom-lookup>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" flexibility="auto">
+                <!--<c-lwc-multi-lookup object-name="Program__c" field-name="Name"
+                    icon-name = "standard:account" input-label="Select Program" onselected={handleProgramResults} required>
+                </c-lwc-multi-lookup> -->
+
+                <c-lwc-custom-lookup object-name="Program__c" field-name="Name" select-record-id={selectProgramRecordId}
+                select-record-name={selectProgramRecordName} icon-name = "action:new_account" onselected={handleProgramResults} input-label="Select Program" required>
+                </c-lwc-custom-lookup>
+            </lightning-layout-item>
+        </lightning-layout>
+
+    </div>
+</lightning-card>
+
+<!--
+
+    <lightning-layout vertical-align="end" class="slds-m-top_medium">
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-card title="Member Details" icon-name="custom:custom63">
+                <div class="c-container">
+                    <lightning-layout>
+                        <lightning-layout-item padding="around-small" flexibility="auto">
+                            <c-lwc-custom-lookup object-name="Account" field-name="Name" select-record-id={selectRecordId}
+                            select-record-name={selectRecordName} icon-name = "action:new_account" onselected={handleEventResults} required>
+                            </c-lwc-custom-lookup>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" flexibility="auto">
+            <lightning-card title="Program Details" icon-name="custom:custom63">
+                <div class="c-container">
+                    <lightning-layout>
+                        <lightning-layout-item padding="around-small" flexibility="auto">
+                            <c-lwc-multi-lookup object-name="Program__c" field-name="Name"
+                            icon-name = "standard:account" required>
+                        </c-lwc-multi-lookup>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout> -->
+
+
+<div class="slds-m-top_xx-large slds-m-left_large" style="margin-left: 40%">
+    <lightning-button
+        variant="brand"
+        label="Save"
+        title="Save"
+        onclick={handleSave}
+        class="slds-m-top_xx-large slds-m-left_large"
+    ></lightning-button>
+    <lightning-button
+    variant="brand"
+    label="Cancel"
+    title="Cancel"
+    onclick={applyFilters}
+    class="slds-m-top_xx-large slds-m-left_small"
+    ></lightning-button>
+    </div>
+</div>
+</template>

@@ -1,0 +1,206 @@
+<template>
+  <lightning-card>
+    <div class="slds-m-around_medium">
+      <template if:true={reserves}>
+        <!--<lightning-datatable
+                key-field="Id"
+                data={reserves}
+                columns={columns}
+                draft-values={draftValues}
+                onsave={handleSave}>
+            </lightning-datatable> -->
+
+        <!--<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Category">Category</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="SubCategory">SubCategory</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Paid">Paid</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Outstanding">Outstanding</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Incurred">Incurred</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Incurred">Comments</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={reserves} for:item="res">
+                        <tr key={res.Category__c}>
+                            <td>
+                                <div>{res.Category__c}</div>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <lightning-input type="number" value={res.Paid__c} disabled></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-input type="number" value={res.Outstanding__c} disabled></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-input type="number" value={res.Incurred1__c} onchange={handleIncurredChange} data-category={res.Category__c}></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-textarea value={res.Comments__c} data-category={res.Category__c} onchange={handleCommentChange}></lightning-textarea>
+                            </td>
+                        </tr>
+                    </template>
+                    <tr key={totalReserves.Category__c}>
+                        <td>
+                            <div>{totalReserves.Category__c}</div>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <lightning-input type="number" value={totalReserves.Paid__c} disabled></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input type="number" value={totalReserves.Outstanding__c} disabled></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input type="number" value={totalReserves.Incurred1__c} disabled></lightning-input>
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table> -->
+
+        <table
+          aria-multiselectable="true"
+          class="slds-table slds-table_cell-buffer slds-table_bordered slds-tree slds-table_tree"
+          role="treegrid"
+        >
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Category">Category</div>
+              </th>
+              <!--<th class="" scope="col">
+                <div class="slds-truncate" title="SubCategory">SubCategory</div>
+              </th>-->
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Paid">Paid</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Outstanding">Outstanding</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Incurred">Incurred</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Incurred">Comments</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={reserves} for:item="res" for:index="index">
+                <tr key={res.categoryName} aria-expanded="true" aria-level="1" aria-posinset="2" aria-selected="false" aria-setsize="4" class="slds-hint-parent">
+                    <th class="slds-tree__item" data-label="Account Name" scope="row">
+                        <template if:true={res.hasChild}>
+                            <lightning-icon icon-name="utility:right" title="Category" size="x-small"></lightning-icon>
+                        </template>
+                        <div class="slds-truncate" title="Acme Corporation" style="padding-right: 50px;">
+                            <a href="javascript:void(0);" tabindex="-1">{res.categoryName}</a>
+                        </div>
+                    </th>
+                    <td data-label="Employees" role="gridcell">
+                        <lightning-input type="number" value={res.paidAmount} disabled></lightning-input>
+                    </td>
+                    <td data-label="Phone Number" role="gridcell">
+                        <lightning-input type="number" value={res.outstandingAmount} disabled></lightning-input>
+                    </td>
+                    <td data-label="Account Owner" role="gridcell">
+                        <lightning-input type="number" value={res.incurredAmount} disabled={res.hasChild} onchange={handleIncurredChange} data-category={res.categoryName}></lightning-input>
+                    </td>
+                    <td data-label="Billing City" role="gridcell">
+                        <lightning-textarea value={res.comments} onchange={handleCommentChange} data-category={res.categoryName} disabled={res.hasChild}></lightning-textarea>
+                    </td>
+                </tr>
+                <template for:each={res.childWrappers} for:item="childRes" for:index="childIndex">
+                    <tr key={childRes.categoryName} aria-level="2" aria-posinset="1" aria-selected="false" aria-setsize="1" class="slds-hint-parent">
+
+                        <th class="slds-tree__item" data-label="Account Name" scope="row">
+                            <!--<button class="slds-button slds-button_icon slds-button_icon-x-small slds-m-right_x-small slds-is-disabled" aria-hidden="true" tabindex="-1" title="Expand Acme Corporation (Oakland)">
+                                <svg class="slds-button__icon slds-button__icon_small" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Collapse Acme Corporation (Oakland)</span>
+                            </button> -->
+                            <div class="slds-truncate" title="Acme Corporation (Oakland)" style="padding-left: 80px;">
+                                <a href="javascript:void(0);" tabindex="-1">{childRes.categoryName}</a>
+                            </div>
+                        </th>
+                        <td data-label="Employees" role="gridcell">
+                            <lightning-input type="number" value={childRes.paidAmount} disabled></lightning-input>
+                        </td>
+                        <td data-label="Phone Number" role="gridcell">
+                            <lightning-input type="number" value={childRes.outstandingAmount} disabled></lightning-input>
+                        </td>
+                        <td data-label="Account Owner" role="gridcell">
+                            <lightning-input type="number" value={childRes.incurredAmount}  onchange={handleIncurredChange} data-category={childRes.categoryName} data-parent-category={res.categoryName}></lightning-input>
+                        </td>
+                        <td data-label="Billing City" role="gridcell">
+                            <lightning-textarea value={childRes.comments} onchange={handleCommentChange} data-category-index={childIndex} data-parent-category-index={index}></lightning-textarea>
+                        </td>
+                    </tr>
+                </template>
+            </template>
+            <tr key={totalReserves.categoryName} aria-expanded="true" aria-level="1" aria-posinset="2" aria-selected="false" aria-setsize="4" class="slds-hint-parent">
+                <th class="slds-tree__item" data-label="Account Name" scope="row">
+                    <div class="slds-truncate" title="Acme Corporation" style="padding-right: 50px;">
+                        <a href="javascript:void(0);" tabindex="-1">TOTAL</a>
+                    </div>
+                </th>
+                <td data-label="Employees" role="gridcell">
+                    <lightning-input type="number" value={totalReserves.paidAmount} disabled></lightning-input>
+                </td>
+                <td data-label="Phone Number" role="gridcell">
+                    <lightning-input type="number" value={totalReserves.outstandingAmount} disabled></lightning-input>
+                </td>
+                <td data-label="Account Owner" role="gridcell">
+                    <lightning-input type="number" value={totalReserves.incurredAmount} disabled></lightning-input>
+                </td>
+                <td data-label="Billing City" role="gridcell">
+
+                </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div
+          class="slds-m-top_xx-large slds-m-left_large"
+          style="margin-left: 40%"
+        >
+          <lightning-button
+            variant="brand"
+            label="Save"
+            title="Save"
+            onclick={handleSave}
+            class="slds-m-top_xx-large slds-m-left_large"
+          ></lightning-button>
+          <lightning-button
+            variant="brand"
+            label="Cancel"
+            title="Cancel"
+            onclick={applyFilters}
+            class="slds-m-top_xx-large slds-m-left_small"
+          ></lightning-button>
+        </div>
+      </template>
+    </div>
+  </lightning-card>
+</template>
